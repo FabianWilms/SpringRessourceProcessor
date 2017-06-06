@@ -1,3 +1,9 @@
+import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.UUID;
+
 import de.wilms.springtest.ResourceProcessorApplication;
 import de.wilms.springtest.entities.Citizen;
 import de.wilms.springtest.processors.CitizenResourceProcessor;
@@ -8,24 +14,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = ResourceProcessorApplication.class)
+@SpringBootTest(classes = ResourceProcessorApplication.class)
 @WebAppConfiguration
 public class ResourceProcessorTests {
 
@@ -86,7 +85,7 @@ public class ResourceProcessorTests {
         mockMvc.perform(get(urlTemplate))
                 .andExpect(status().isOk());
 
-        assertFalse(CitizenResourceProcessor.GOT_CALLED);
+        assertTrue(CitizenResourceProcessor.GOT_CALLED);
         assertTrue(CitizenResourcesProcessor.GOT_CALLED);
         assertTrue(ResourceSupportResourceProcessor.GOT_CALLED);
     }
